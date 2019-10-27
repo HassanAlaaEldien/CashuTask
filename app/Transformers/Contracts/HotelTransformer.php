@@ -14,5 +14,5 @@ interface HotelTransformer
     /**
      * @return array
      */
-    public static function transform(array $hotel_details);
+    public function transform(array $hotel_details);
 }

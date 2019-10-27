@@ -30,11 +30,11 @@ class BestHotelAPI
      */
     public function searchHotels()
     {
-        return [
-                'hotel' => 'Best Hotel Name!',
-                'hotelRate' => rand(1, 5),
-                'hotelFare' => round(rand(900, 1500) / 10, 2),
-                'roomAmenities' => "Car Park,Restaurant,Internet access,Air conditioned,e-Check-out & e-check-in,Bar"
-            ] + $this->request;
+        return array([
+            'hotel' => 'Best Hotel Name!',
+            'hotelRate' => rand(1, 5),
+            'hotelFare' => round(rand(900, 1500) / 10, 2),
+            'roomAmenities' => "Car Park,Restaurant,Internet access,Air conditioned,e-Check-out & e-check-in,Bar"
+        ]);
     }
 }

@@ -30,7 +30,7 @@ class TopHotelsAPI
      */
     public function getHotels()
     {
-        return [
+        return array([
             'hotelName' => 'Top Hotel Name!',
             'rate' => (string)rand(1, 5),
             'price' => rand(100, 600),
@@ -43,6 +43,6 @@ class TopHotelsAPI
                 "e-Check-out & e-check-in",
                 "Bar"
             ]
-        ];
+        ]);
     }
 }

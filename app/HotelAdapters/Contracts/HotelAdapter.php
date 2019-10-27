@@ -14,5 +14,5 @@ interface HotelAdapter
     /**
      * @return array
      */
-    public function search(array $request);
+    public function get();
 }

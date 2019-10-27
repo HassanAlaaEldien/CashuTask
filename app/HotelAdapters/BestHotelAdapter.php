@@ -12,18 +12,30 @@ namespace App\HotelAdapters;
 use App\HotelAdapters\Contracts\HotelAdapter;
 use App\HotelProviders\BestHotelAPI;
 use App\Transformers\BestHotelTransformer;
+use App\Transformers\Transformer;
 
 class BestHotelAdapter implements HotelAdapter
 {
+    private $bestHotel;
+
+    /**
+     * BestHotelAdapter constructor.
+     * @param BestHotelAPI $adapter
+     */
+    public function __construct(BestHotelAPI $adapter)
+    {
+        $this->bestHotel = $adapter;
+    }
+
     /**
      * Search BestHotels Provider For Required Hotels.
      *
      * @return array
      */
-    public function search(array $request)
+    public function get()
     {
-        $hotels = (new BestHotelAPI($request))->searchHotels();
+        $hotels = $this->bestHotel->searchHotels();
 
-        return BestHotelTransformer::transform($hotels);
+        return Transformer::create($hotels, new BestHotelTransformer);
     }
 }

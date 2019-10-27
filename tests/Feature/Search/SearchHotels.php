@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Search;
 
-use App\HotelAdapters\Contracts\HotelAdapter;
-use App\HotelAdapters\TopHotelAdapter;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\TestResponse;
 use Tests\TestCase;
@@ -13,7 +11,7 @@ class SearchHotels extends TestCase
     /**
      * @test
      */
-    public function any_guest_can_search_our_hotels_using_best_hotel_provider()
+    public function any_guest_can_search_our_hotels_using_both_providers()
     {
         $request = $this->mockRequestData();
 
@@ -21,23 +19,9 @@ class SearchHotels extends TestCase
 
         $response->assertStatus(200);
 
-        $response->assertJson(['provider' => 'Best Hotel']);
-    }
+        $search_result = $response->decodeResponseJson();
 
-    /**
-     * @test
-     */
-    public function any_guest_can_search_our_hotels_using_top_hotel_provider()
-    {
-        $request = $this->mockRequestData();
-
-        $this->app->bind(HotelAdapter::class, TopHotelAdapter::class);
-
-        $response = $this->get(route('hotels.search', $request));
-
-        $response->assertStatus(200);
-
-        $response->assertJson(['provider' => 'Top Hotel']);
+        $this->assertCount(2, $search_result);
     }
 
     /**
@@ -49,7 +33,7 @@ class SearchHotels extends TestCase
 
         $response = $this->get(route('hotels.search', $request));
 
-        $this->assertValidationError($response,'adult_number');
+        $this->assertValidationError($response, 'adult_number');
     }
 
     /**
@@ -61,7 +45,7 @@ class SearchHotels extends TestCase
 
         $response = $this->get(route('hotels.search', $request));
 
-        $this->assertValidationError($response,'to');;
+        $this->assertValidationError($response, 'to');;
     }
 
     /**
@@ -73,7 +57,7 @@ class SearchHotels extends TestCase
 
         $response = $this->get(route('hotels.search', $request));
 
-        $this->assertValidationError($response,'from');
+        $this->assertValidationError($response, 'from');
     }
 
 

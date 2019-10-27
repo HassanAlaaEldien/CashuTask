@@ -17,12 +17,15 @@ class TopHotelTransformer implements HotelTransformer
      * @param array $hotel_details
      * @return array
      */
-    public static function transform(array $hotel_details)
+    public function transform(array $hotel_details)
     {
         return [
             'provider' => 'Top Hotel',
             'hotelName' => $hotel_details['hotelName'],
-            'fare' => self::prepareFarePerNight($hotel_details['price'], ($hotel_details['discount'])),
+            'rate' => (int)$hotel_details['rate'],
+            'fare' => $this->prepareFarePerNight(
+                $hotel_details['price'], ($hotel_details['discount'])
+            ),
             'amenities' => $hotel_details['amenities']
         ];
     }
@@ -32,7 +35,7 @@ class TopHotelTransformer implements HotelTransformer
      * @param $discount
      * @return float|int
      */
-    private static function prepareFarePerNight($price, $discount)
+    private function prepareFarePerNight($price, $discount)
     {
         $discount_amount = $discount ? $price * ($discount / 100) : 0;
         return $price - $discount_amount;

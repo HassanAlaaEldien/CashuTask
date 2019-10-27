@@ -18,30 +18,27 @@ class BestHotelTransformer implements HotelTransformer
      * @param array $hotel_details
      * @return array
      */
-    public static function transform(array $hotel_details)
+    public function transform(array $hotel_details)
     {
         return [
             'provider' => 'Best Hotel',
             'hotelName' => $hotel_details['hotel'],
-            'fare' => self::prepareFarePerNight(
-                $hotel_details['hotelFare'], $hotel_details['from'], $hotel_details['to']
-            ),
+            'rate' => $hotel_details['hotelRate'],
+            'fare' => $this->prepareFarePerNight($hotel_details['hotelFare']),
             'amenities' => explode(',', $hotel_details['roomAmenities']),
         ];
     }
 
     /**
      * @param $total_fare
-     * @param $date_from
-     * @param $date_to
      * @return float|int
      */
-    private static function prepareFarePerNight($total_fare, $date_from, $date_to)
+    private function prepareFarePerNight($total_fare)
     {
-        $nights = Carbon::parse($date_from)->diffInDays(
-            Carbon::parse($date_to)
+        $nights = Carbon::parse(request()->from)->diffInDays(
+            Carbon::parse(request()->to)
         );
 
-        return $total_fare / $nights;
+        return round($total_fare / $nights, 2);
     }
 }

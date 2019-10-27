@@ -12,18 +12,32 @@ namespace App\HotelAdapters;
 use App\HotelAdapters\Contracts\HotelAdapter;
 use App\HotelProviders\TopHotelsAPI;
 use App\Transformers\TopHotelTransformer;
+use App\Transformers\Transformer;
 
 class TopHotelAdapter implements HotelAdapter
 {
+    private $topHotel;
+
+    /**
+     * TopHotelAdapter constructor.
+     * @param TopHotelsAPI $adapter
+     */
+    public function __construct(TopHotelsAPI $adapter)
+    {
+        $this->topHotel = $adapter;
+    }
+
     /**
      * Search TopHotels Provider For Required Hotels.
      *
+     * @param array $request
+     *
      * @return array
      */
-    public function search(array $request)
+    public function get()
     {
-        $hotels = (new TopHotelsAPI($request))->getHotels();
+        $hotels = $this->topHotel->getHotels();
 
-        return TopHotelTransformer::transform($hotels);
+        return Transformer::create($hotels, new TopHotelTransformer);
     }
 }
