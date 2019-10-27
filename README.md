@@ -16,6 +16,12 @@ After composer install create .env file by running:
 mv .env.example .env
 ```
 
+Then generate application encryption key:
+
+```bash
+php artisan key:generate
+```
+
 Then to make the project up and running:
 
 ```bash
