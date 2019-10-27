@@ -10,6 +10,12 @@ At first you have to run:
 composer install
 ```
 
+After composer install create .env file by running:
+
+```bash
+mv .env.example .env
+```
+
 Then to make the project up and running:
 
 ```bash
